@@ -34,6 +34,7 @@ async function run() {
     // const haiku = database.collection("haiku");
 
     const coffeeCollection = client.db("coffeeDB").collection('coffee');
+    const userCollection = client.db("coffeeDB").collection('user')
 
     app.get('/coffee', async(req, res) => {
       const cursor = coffeeCollection.find();
@@ -81,6 +82,14 @@ async function run() {
       const result = await coffeeCollection.deleteOne(query);
       res.send(result)
     })
+
+    // User related api 
+    app.post('/user', async(req, res) => {
+      const user = req.body;
+      console.log(user);
+      const result = await userCollection.insertOne(user);
+      res.send(result)
+    })
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
@@ -100,3 +109,8 @@ app.get('/', (req, res) => {
 app.listen( port, () => {
     console.log(`coffee making server is running on port : ${port}`);
 })
+
+/*
+DB_USER = mehedihs2015
+DB_PASS = 96p3qgG9FUK8E8GB
+*/
